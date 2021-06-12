@@ -74,7 +74,6 @@ public class Main {
 class Point{
 	int x;
 	int y;
-	int dist;
 	
 	Point(int x, int y){
 		this.x = x;
