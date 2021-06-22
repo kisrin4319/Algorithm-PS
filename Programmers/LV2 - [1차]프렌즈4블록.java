@@ -4,7 +4,7 @@ class Solution
     static char[][] puzzle;
     public int solution(int m, int n, String[] board) {
         
-		boolean init = true;
+	boolean init = true;
         puzzle = new char[m][n];
         
         for(int r = 0; r<m; r++)
@@ -33,7 +33,7 @@ class Solution
                 if(puzzle[r][c] == 'X') continue;
                 
                 if(puzzle[r][c] == puzzle[r1][c] && puzzle[r][c] == puzzle[r][c1] && puzzle[r][c] == puzzle[r1][c1])
-				{
+		{
                     pang[r][c]   = true;
                     pang[r1][c]  = true;
                     pang[r][c1]  = true;
@@ -45,7 +45,7 @@ class Solution
         {
             for(int c = 0; c < n; c++){
                 if(pang[r][c])
-				{
+		{
                     puzzle[r][c] = 'X';
                     cnt++;
                 }
