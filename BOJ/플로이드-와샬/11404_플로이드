@@ -1,0 +1,62 @@
+import java.io.*;
+
+public class Main {
+    static final int INF = Integer.MAX_VALUE/10;
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter((new OutputStreamWriter(System.out)));
+
+        int N = Integer.parseInt(br.readLine());
+        int M = Integer.parseInt(br.readLine());
+
+        int[][] city = new int[N+1][N+1];
+
+        for(int r = 1; r<=N;r++) {
+            for(int c = 1; c<=N;c++)
+            {
+                city[r][c] = (r == c) ? 0 : INF;
+            }
+
+        }
+
+        for(int idx =1; idx<=M;idx++)
+        {
+            String[] prices = br.readLine().split(" ");
+
+            int R = Integer.parseInt(prices[0]);
+            int C = Integer.parseInt(prices[1]);
+            int P = Integer.parseInt(prices[2]);
+
+            city[R][C] = Math.min(city[R][C],P);
+        }
+
+        // 경유지
+        for(int i=1;i<=N;i++)
+        {
+            //시작점
+            for(int j=1;j<=N;j++)
+            {
+                if(i == j) continue;
+                //도착점
+                for(int k = 1; k<=N;k++)
+                {
+                    if(j==k) continue;
+                    // 시작점 => 도착점으로 가는 비용
+                    // 시작점 => 도착점으로 바로 가는 비용 , 경유지를 통해 가는 비용의 합 중 최소
+                    city[j][k] = Math.min(city[j][k],(city[j][i]+city[i][k]));
+                }
+            }
+        }
+        for(int r = 1;r<=N;r++)
+        {
+            for(int c = 1; c<=N;c++)
+            {
+                bw.write((city[r][c] == INF ? "0" : String.valueOf(city[r][c])) + " ");
+            }
+            bw.newLine();
+        }
+        bw.flush();
+        br.close();
+    }
+}
