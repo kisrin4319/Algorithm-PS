@@ -1,5 +1,4 @@
 import java.io.*;
-
 public class Main {
     static final int INF = Integer.MAX_VALUE/10;
     public static void main(String[] args) throws IOException {
@@ -17,7 +16,6 @@ public class Main {
             {
                 city[r][c] = (r == c) ? 0 : INF;
             }
-
         }
 
         for(int idx =1; idx<=M;idx++)
