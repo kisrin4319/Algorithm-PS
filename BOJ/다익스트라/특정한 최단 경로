@@ -1,0 +1,129 @@
+import java.io.*;
+import java.math.*;
+import java.util.*;
+
+class MyScanner {
+	BufferedReader br;
+	StringTokenizer st;
+
+	public MyScanner() {
+		br = new BufferedReader(new InputStreamReader(System.in));
+	}
+
+	String next() {
+		while (st == null || !st.hasMoreElements()) {
+			try {
+				st = new StringTokenizer(br.readLine());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return st.nextToken();
+	}
+
+	int nextInt() {
+		return Integer.parseInt(next());
+	}
+
+	long nextLong() {
+		return Long.parseLong(next());
+	}
+
+	double nextDouble() {
+		return Double.parseDouble(next());
+	}
+
+	char nextChar() {
+		return next().charAt(0);
+	}
+}
+
+public class Main {
+
+	public static PrintWriter out;
+	public static int N,M;
+	public static final int inf = 100000000;
+	public static ArrayList<Edge>[] map;
+	public static int[] dist;
+	public static boolean[] visited;
+	public static void main(String[] args) throws IOException {
+		MyScanner sc = new MyScanner();
+		out = new PrintWriter(new BufferedOutputStream(System.out));
+		N = sc.nextInt();
+		M = sc.nextInt();
+		map = (ArrayList<Edge>[]) new ArrayList[N+1];
+		dist = new int[N+1];
+		for(int i=1;i<=N;i++)
+		{
+			map[i] = new ArrayList<Edge>();
+		}
+		for(int i=0;i<M;i++)
+		{
+			int t1 = sc.nextInt();
+			int t2 = sc.nextInt();
+			int t3 = sc.nextInt();
+			map[t1].add(new Edge(t2,t3));
+			map[t2].add(new Edge(t1,t3));
+		}
+		int r1 = sc.nextInt();
+		int r2 = sc.nextInt();
+		int result1 = 0;
+		int result2 = 0;
+		
+		result1+=dijkstra(1,r1);
+		result1+=dijkstra(r1,r2);
+		result1+=dijkstra(r2,N);
+		result2+=dijkstra(1,r2);
+		result2+=dijkstra(r2,r1);
+		result2+=dijkstra(r1,N);
+		int ans = Math.min(result1,result2);
+		if(ans>=inf){
+			out.println(-1);
+		}
+		else{
+			out.println(ans);
+		}
+		out.flush();
+	}
+	private static int dijkstra(int start,int end)
+	{
+		visited = new boolean[N+1];
+		Arrays.fill(dist, inf);
+		dist[start] = 0;
+		
+		while(true)
+		{
+			int min = inf;
+			int index = -1;
+			for(int k=1;k<=N;k++)
+			{
+				if(visited[k]==false && min>dist[k]){
+					min = dist[k];
+					index = k;
+				}
+			}
+			if(index == -1)
+			{
+				break;
+			}
+			visited[index]=true;
+			for(int i=0;i<map[index].size();i++)
+			{
+				if(map[index].get(i).cost !=0 && dist[map[index].get(i).index]>dist[index]+map[index].get(i).cost){
+					dist[map[index].get(i).index]=dist[index]+map[index].get(i).cost;
+				}
+			}
+		}
+		return dist[end];
+	}
+
+}
+
+class Edge {
+	int index, cost;
+
+	public Edge(int index, int cost) {
+		this.index = index;
+		this.cost = cost;
+	}
+}
