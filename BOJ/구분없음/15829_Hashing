@@ -1,0 +1,37 @@
+import java.io.*;
+import java.math.BigInteger;
+
+public class Main {
+    static BigInteger rem = BigInteger.valueOf(1234567891);
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int len = Integer.parseInt(br.readLine());
+        String str = br.readLine();
+
+        BigInteger bigInteger = BigInteger.ZERO;
+
+        int L = 0;
+
+        for(int idx=0;idx<len;idx++)
+        {
+            int num = str.charAt(idx) -'a'+1;
+            BigInteger result =getHashCode(num,L);
+
+            bigInteger = bigInteger.add(result).remainder(rem);
+            L++;
+        }
+        
+        System.out.println(bigInteger);
+    }
+
+    private static BigInteger getHashCode(int num, int idx) {
+
+        BigInteger exp = BigInteger.valueOf(31).pow(idx);
+
+        BigInteger multiply = BigInteger.valueOf(num).multiply(exp).remainder(rem);
+
+        return multiply;
+    }
+}
