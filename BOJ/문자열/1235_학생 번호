@@ -1,0 +1,53 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+
+        int maxlen = 0;
+        int answer = 0;
+
+        List<String> list = new ArrayList<>();
+        for(int idx = 0; idx<N;idx++) {
+            String input = br.readLine();
+            maxlen = Math.max(maxlen,input.length());
+            list.add(input);
+        }
+        for(int len = 1;len<=maxlen;len++){
+            boolean key = findDistinctKey(list,len);
+            if(key){
+                answer = len;
+                break;
+            }
+        }
+        System.out.println(answer);
+        br.close();
+    }
+
+    private static boolean findDistinctKey(List<String> list, int len) {
+
+        List<String> key = new ArrayList<>();
+        for(int idx = 0; idx<list.size();idx++) {
+
+            String str = list.get(idx);
+
+            int srt = str.length()-len;
+            String word = str.substring(srt);
+
+            if(key.contains(word)) {
+                return false;
+            }
+            else {
+                key.add(word);
+            }
+        }
+        return true;
+    }
+}
