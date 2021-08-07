@@ -1,0 +1,23 @@
+import java.io.*;
+import java.util.TreeMap;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        TreeMap<String,Integer> treeMap = new TreeMap<>();
+
+        int count = 0;
+        String input = "";
+        while((input = br.readLine())!= null)
+        {
+            count++;
+            treeMap.put(input,treeMap.getOrDefault(input,0)+1);
+        }
+
+        for(String key : treeMap.keySet()){
+            System.out.println(key +" " + String.format("%.4f",((float)treeMap.get(key) / (float)count) * 100));
+        }
+    }
+}
