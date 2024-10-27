@@ -1,14 +1,5 @@
-import java.util.*;
-
-public class Main {
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-
-        int[] mockArray = {1,5,2,6,3,7,4};
-        int[][] mockCommands = {{2, 5, 3},{4,4,1},{1,7,3}};
-        System.out.println(Arrays.toString(solution.solution(mockArray, mockCommands)));
-    }
-}
+import java.util.ArrayList;
+import java.util.Arrays;
 
 class Solution {
     public int[] solution(int[] array, int[][] commands) {
