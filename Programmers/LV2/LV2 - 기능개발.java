@@ -1,50 +1,27 @@
 import java.util.*;
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-   	int loopcnt = 0;
-    	int index = 0;
-    	int loop = 0;
-    	int totcnt =0;
-    	ArrayList<Integer> arr = new ArrayList<Integer>();
-    	
-    	while(true)
-    	{
-    		
-    		if(totcnt== progresses.length) {
-    			break;
-    		}
-    		
-    		loop = index;
-    		
-    		for(int i =loop;i<progresses.length;i++) {
-    			progresses[i]+=speeds[i];
-    		}
-    		    		
-    		
-    		for(int i=loop;i<progresses.length;i++) {
-    			if(progresses[i]>=100) {
-    				index++;
-    				loopcnt++;
-    				totcnt++;
-    			}
-    			else {
-    				break;
-    			}
-    		}
-    		
-    		if(loopcnt>0) {
-    			arr.add(loopcnt);
-    			loopcnt = 0;
-    		}
-    	}
-    	
-    	int[] answer = new int[arr.size()];
-    	
-    	for(int i =0; i<arr.size();i++) {
-    		//System.out.println(arr.get(i));
-    		answer[i] = arr.get(i);
-    	}        
-       
-        return answer;
+		int[] times = new int[progresses.length];
+		ArrayList<Integer> result = new ArrayList<>();
+
+		for (int i = 0; i < progresses.length; i++) {
+			times[i] = (int) Math.ceil((100.0 - progresses[i]) / speeds[i]);
+		}
+
+		int completedWorkIndex = 0;
+
+		while (completedWorkIndex < times.length) {
+			int currentDays = times[completedWorkIndex];
+			int count = 0;
+
+			// 현재 작업과 함께 배포할 수 있는 작업 수 계산
+			while (completedWorkIndex < times.length && times[completedWorkIndex] <= currentDays) {
+				completedWorkIndex++;
+				count++;
+			}
+
+			result.add(count);
+		}
+		return result.stream().mapToInt(i->i).toArray();
     }
 }

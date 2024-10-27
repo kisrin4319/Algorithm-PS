@@ -4,25 +4,35 @@ public class Main {
     public static void main(String[] args) {
         Solution solution = new Solution();
 
-        int[] mockArr = {1,1,3,3,0,1,1};
-        System.out.println(Arrays.toString(solution.solution(mockArr)));
+        int[] mockProgresses = {95, 90, 99, 99, 80, 99};
+        int[] mockSpeeds = {1, 1, 1, 1, 1, 1};
+        System.out.println(Arrays.toString(solution.solution(mockProgresses,mockSpeeds)));
     }
 }
 
 class Solution {
-    public int[] solution(int []arr) {
-        Stack<Integer> st = new Stack<>();
-        for(Integer i : arr) {
-            if (st.isEmpty() || !st.peek().equals(i)) {
-                st.add(i);
-            }
-        }
-        int[] answer = new int[st.size()];
+    public int[] solution(int[] progresses, int[] speeds) {
+        int[] times = new int[progresses.length];
+        ArrayList<Integer> result = new ArrayList<>();
 
-        int index = st.size() - 1;
-        while (!st.isEmpty()) {
-            answer[index--] = st.pop();
+        for (int i = 0; i < progresses.length; i++) {
+            times[i] = (int) Math.ceil((100.0 - progresses[i]) / speeds[i]);
         }
-        return answer;
+
+        int completedWorkIndex = 0;
+
+        while (completedWorkIndex < times.length) {
+            int currentDays = times[completedWorkIndex];
+            int count = 0;
+
+            // 현재 작업과 함께 배포할 수 있는 작업 수 계산
+            while (completedWorkIndex < times.length && times[completedWorkIndex] <= currentDays) {
+                completedWorkIndex++;
+                count++;
+            }
+
+            result.add(count);
+        }
+        return result.stream().mapToInt(i->i).toArray();
     }
 }
