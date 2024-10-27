@@ -1,13 +1,4 @@
-import java.util.*;
-
-public class Main {
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-
-        String mockString = "(())()";
-        System.out.println(solution.solution(mockString));
-    }
-}
+import java.util.Stack;
 
 class Solution {
     boolean solution(String s) {
